@@ -1,0 +1,37 @@
+{
+  "manifest_version": 2,
+  "name": "101exam helper",
+  "version": "1.0",
+  "description": "101考试拓展，使用说明todo",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
+    "default_title": "101 exam helper",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",// 标签页权限
+    "activeTab",
+    "webRequest",//web请求的权限
+    "webRequestBlocking"//web请求阻塞的权限
+  ],
+  "content_scripts": [ // 内容页
+    {
+      "matches": ["*://e.101.com/*"],
+      "js": ["jquery-1.7.1.js","tab.js"],
+      "run_at": "document_end"
+//      "match_about_blank":true,
+//      "all_frames": true
+    }
+  ]
+
+}
