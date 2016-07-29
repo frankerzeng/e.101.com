@@ -64,13 +64,18 @@ function sendMessage(data, type) {
                     } else if (type == 2 && response != undefined && response.farewell == "end") {
                         document.getElementById('titleId').innerHTML = "<h1>开始请求题目数据</h1>";
                         setTimeout(function () {
+                            console.log("urls_real======array");
+                            console.log(urls_real);
                             for (var i = 0; i < urls_real.length; i++) {
-                                setTimeout(function () {
-                                    httpRequest(urls_real[i], htmlFill)
-                                }, 1000);
+                                (function (i) {
+                                    setTimeout(function () {
+                                        httpRequest(urls_real[i], htmlFill)
+                                    }, 1000);
+                                })(i);
                             }
                         }, 2000);
-                        sendMessage("", 3);
+                        // 提交考试
+                        //sendMessage("", 3);
                     } else if (type == 3 && response != undefined && response.farewell == "end") {
                         document.getElementById('titleId').innerHTML = "<h1>已提交</h1>";
                     }
@@ -79,6 +84,7 @@ function sendMessage(data, type) {
         }
     });
 }
+
 
 // 接收消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -90,6 +96,8 @@ function isExamUrl(url) {
 }
 
 function httpRequest(url, callback) {
+    console.log("url======array");
+    console.log(url);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function () {

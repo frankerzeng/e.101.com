@@ -37,9 +37,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     } else if (request.type == 3) {
         var interval1 = setInterval(function () {
             var btn_length1 = $(".wt-submit-btn").length;
+            console.log(btn_length1);
+            console.log($(".wt-submit-btn"));
+            console.log("=====btn_length1=====");
             if (btn_length1 > 0) {
                 setTimeout(function () {
-                    $(".wt-submit-btn").click();
+                    $(".wt-submit-btn")[0].click();
                     setTimeout(function () {
                         $('.ui-button-text').eq(0).click();
                     }, 500);
@@ -52,10 +55,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function beginExam() {
-    var btn1 = $(btnClass1)[0];
-    var btn2 = $(btnClass2)[0];
-    btn1.click();
-    btn2.click();
+
+    var btn1 = $(btnClass1);
+    var btn2 = $(btnClass2);
+
+    if (btn1.length > 0) {
+        btn1[0].click();
+    }
+    if (btn2.length > 0) {
+        btn2[0].click();
+    }
 }
 
 function htmlFill(data) {
