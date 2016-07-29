@@ -10,17 +10,13 @@ var btnClass2 = ".test-enter-btn";
 
 // 接收消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log(sender);
-    console.log(request);
     // 填充html
     if (request.type == 1) {
         sendResponse({farewell: "end"});
         htmlFill(request.data);
-        setTimeout(function () {
-            $(".wt-submit-btn").click();
-        }, 3000);
     } else if (request.type == 2) {
         var btn_length = $(btnClass1).length || $(btnClass2).length;
+        console.log('_---');
         console.log(btn_length);
         if (btn_length > 0) {
             beginExam();
@@ -28,7 +24,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         } else {
             var interval = setInterval(function () {
                 var btn_length = $(btnClass1).length || $(btnClass2).length;
-                console.log(btn_length);
                 if (btn_length > 0) {
                     clearInterval(interval);
                     beginExam();
@@ -39,6 +34,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 clearInterval(interval);
             }, 5000)
         }
+    } else if (request.type == 3) {
+        var interval1 = setInterval(function () {
+            var btn_length1 = $(".wt-submit-btn").length;
+            if (btn_length1 > 0) {
+                setTimeout(function () {
+                    $(".wt-submit-btn").click();
+                    setTimeout(function () {
+                        $('.ui-button-text').eq(0).click();
+                    }, 500);
+                }, 500);
+                sendResponse({farewell: "end"});
+                clearInterval(interval1);
+            }
+        }, 100);
     }
 });
 
@@ -53,22 +62,19 @@ function htmlFill(data) {
     var index_0 = data.indexOf("(");
     data = data.slice(index_0 + 1, -1);
     data = JSON.parse(data);
+    console.log("-------------------------");
+    console.log(data);
 
     for (var j = 0; j < data.Data.length; j++) {
         var data_tmp = data.Data[j];
-        console.log("data-----");
-        console.log(data_tmp);
 
         var questionType = data_tmp.QuestionType;
-        console.log(questionType);
-
+        var subItems = data_tmp.SubItems;
+        var indexAnswer = 0;
         // 单选题
         if (questionType == 10) {
-            var subItems = data_tmp.SubItems;
             for (var i = 0; i < subItems.length; i++) {
                 var answer = subItems[i].Answer;
-                console.log(answer + answer);
-                var indexAnswer = 0;
                 if (answer == "B") {
                     indexAnswer = 1;
                 } else if (answer == "C") {
@@ -79,15 +85,34 @@ function htmlFill(data) {
                 $('#' + data_tmp.Id).find(".wt-item-option").children().eq(indexAnswer).find("i").click();
             }
         } else if (questionType == 30) { // 判断题
-            var subItems = data_tmp.SubItems;
             for (var i = 0; i < subItems.length; i++) {
                 var answer = subItems[i].Answer;
-                console.log(answer + answer);
-                var indexAnswer = 0;
                 if (answer == "错") {
                     indexAnswer = 1;
                 }
                 $('#' + data_tmp.Id).find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+            }
+        } else if (questionType == 15) { // 多选
+            for (var i = 0; i < subItems.length; i++) {
+                var answer = subItems[i].Answer;
+                if (answer.indexOf("A") >= 0) {
+                    $('#' + data_tmp.Id).find(".wt-item-option").children().eq(0).find("i").click();
+                }
+                if (answer.indexOf("B") >= 0) {
+                    $('#' + data_tmp.Id).find(".wt-item-option").children().eq(1).find("i").click();
+                }
+                if (answer.indexOf("C") >= 0) {
+                    $('#' + data_tmp.Id).find(".wt-item-option").children().eq(2).find("i").click();
+                }
+                if (answer.indexOf("D") >= 0) {
+                    $('#' + data_tmp.Id).find(".wt-item-option").children().eq(3).find("i").click();
+                }
+                if (answer.indexOf("E") >= 0) {
+                    $('#' + data_tmp.Id).find(".wt-item-option").children().eq(4).find("i").click();
+                }
+                if (answer.indexOf("F") >= 0) {
+                    $('#' + data_tmp.Id).find(".wt-item-option").children().eq(5).find("i").click();
+                }
             }
         }
     }
