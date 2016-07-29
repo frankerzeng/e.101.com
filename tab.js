@@ -61,12 +61,11 @@ function beginExam() {
 
     if (btn1.length > 0) {
         btn1[0].click();
-    }
-    if (btn2.length > 0) {
+    } else if (btn2.length > 0) {
         btn2[0].click();
     }
 }
-
+var flag_alert = true;
 function htmlFill(data) {
     var index_0 = data.indexOf("(");
     data = data.slice(index_0 + 1, -1);
@@ -122,6 +121,11 @@ function htmlFill(data) {
                 if (answer.indexOf("F") >= 0) {
                     $('#' + data_tmp.Id).find(".wt-item-option").children().eq(5).find("i").click();
                 }
+            }
+        } else if (questionType == 25) { // 主观题
+            if (flag_alert) {
+                alert("考试包含主观题，请自行回答");
+                flag_alert = false;
             }
         }
     }

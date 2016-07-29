@@ -26,7 +26,7 @@
   ],
   "content_scripts": [ // 内容页
     {
-      "matches": ["*://e.101.com/*"],
+      "matches": ["*://e.101.com/*","*://xue.101.com/*"],
       "js": ["jquery-1.7.1.js","tab.js"],
       "run_at": "document_end"
 //      "match_about_blank":true,
