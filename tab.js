@@ -89,6 +89,14 @@ function htmlFill(data) {
                     indexAnswer = 2;
                 } else if (answer == "D") {
                     indexAnswer = 3;
+                } else if (answer == "E") {
+                    indexAnswer = 4;
+                } else if (answer == "F") {
+                    indexAnswer = 5;
+                } else if (answer == "G") {
+                    indexAnswer = 6;
+                } else if (answer == "H") {
+                    indexAnswer = 7;
                 }
                 $('#' + data_tmp.Id).find(".wt-item-option").children().eq(indexAnswer).find("i").click();
             }
