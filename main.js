@@ -24,7 +24,7 @@ function _onCompleted() {
                 urls_real.push(url_real);
             }
         },
-        {urls: ["http://cloud.e.101.com/*"]}
+        {urls: ["http://cloud.e.101.com/*"]} //监听发送的http请求，所有接口走此url
     );
 }
 
@@ -92,7 +92,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function isExamUrl(url) {
-    return (url.length > 20 && url.substr(7, 10) == "e.101.com/");
+    return (url.length > 20 && url.substr(7, 10) == "e.101.com/") || (url.length > 20 && url.substr(7, 18) == "elearning.101.com/");
 }
 
 function httpRequest(url, callback) {
