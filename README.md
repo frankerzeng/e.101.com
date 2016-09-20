@@ -1,4 +1,4 @@
-# 101考试chrome插件
+# 101考试chrome插件(e.101.com和elearning.101.com页面下)
 
 在 开始考试或者重新考试页面
 
