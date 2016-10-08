@@ -92,7 +92,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function isExamUrl(url) {
-    return (url.length > 20 && url.substr(7, 10) == "e.101.com/") || (url.length > 20 && url.substr(7, 18) == "elearning.101.com/");
+    var patt = new RegExp('.101.com');
+    return patt.test(url);
 }
 
 function httpRequest(url, callback) {

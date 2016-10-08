@@ -7,6 +7,8 @@ function sendMessage() {
 
 var btnClass1 = ".test-goon-btn";
 var btnClass2 = ".test-enter-btn";
+//var btnClass3 = ".ln-btn";
+var btnClass3 = ".ln-btn-1111";
 
 // 接收消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -15,7 +17,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         sendResponse({farewell: "end"});
         htmlFill(request.data);
     } else if (request.type == 2) {
-        var btn_length = $(btnClass1).length || $(btnClass2).length;
+        var btn_length = $(btnClass1).length || $(btnClass2).length || $(btnClass3).length;
         console.log('_---');
         console.log(btn_length);
         if (btn_length > 0) {
@@ -23,7 +25,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             sendResponse({farewell: "end"});
         } else {
             var interval = setInterval(function () {
-                var btn_length = $(btnClass1).length || $(btnClass2).length;
+                var btn_length = $(btnClass1).length || $(btnClass2).length || $(btnClass3).length;
                 if (btn_length > 0) {
                     clearInterval(interval);
                     beginExam();
@@ -58,11 +60,14 @@ function beginExam() {
 
     var btn1 = $(btnClass1);
     var btn2 = $(btnClass2);
+    var btn3 = $(btnClass3);
 
     if (btn1.length > 0) {
         btn1[0].click();
     } else if (btn2.length > 0) {
         btn2[0].click();
+    } else if (btn3.length > 0) {
+        btn3[0].click();
     }
 }
 var flag_alert = true;
