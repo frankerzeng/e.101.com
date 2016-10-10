@@ -1,4 +1,5 @@
 var urls_real = [];
+var url_xue = false;
 var init = function () {
     chrome.tabs.getSelected(function (w) {
         var addBtn = document.getElementById('addBtn');
@@ -8,6 +9,7 @@ var init = function () {
             addBtn.onclick = function () {
                 addBtn.style.display = "none";
                 _onCompleted();
+                console.log("===1");
                 sendMessage("", 2);
             };
         } else {
@@ -19,12 +21,29 @@ var init = function () {
 function _onCompleted() {
     chrome.webRequest.onCompleted.addListener(
         function (details) {
-            if (details.url.indexOf("/baseinfo") > 1) {
-                url_real = details.url.replace("/baseinfo", "");
-                urls_real.push(url_real);
+            if (details.url.indexOf("xue.101.") > 1) {
+                if (details.url.indexOf("/questions?qid") > 1) {
+                    url_xue = true;
+                    url_real = details.url.replace("/questions", "/analysis");
+                    //url_real = "http://xue.101.com/ndu/v1/m/exams/d/sessions/s/analysis?qid=3756a44f-a644-44f7-8903-d79e0cf031c1_0&_=1476066669344";
+                    var index_start = url_real.indexOf('exams/');
+                    var index_end = url_real.indexOf('analysis');
+                    var replact_str = "exams/55ecf203-ade1-461f-b2ad-f6f2c2f450d8/sessions/ab02319d-3288-42c6-8641-9034a29220a2/";
+                    url_real = url_real.substring(0, index_start) + replact_str + url_real.substring(index_end);
+
+                    console.log("===2");
+                    console.log(url_real);
+
+                    urls_real.push(url_real);
+                }
+            } else {
+                if (details.url.indexOf("/baseinfo") > 1) {
+                    url_real = details.url.replace("/baseinfo", "");
+                    urls_real.push(url_real);
+                }
             }
         },
-        {urls: ["http://cloud.e.101.com/*"]} //监听发送的http请求，所有接口走此url
+        {urls: ["http://cloud.e.101.com/*", "http://xue.101.com/*"]} //监听发送的http请求，所有接口走此url
     );
 }
 
@@ -57,6 +76,7 @@ function sendMessage(data, type) {
                 chrome.tabs.sendMessage(tab[i].id, {
                     data: data,
                     type: type,
+                    url_xue: url_xue,
                     length: urls_real.length
                 }, function (response) {
                     if (type == 1 && response != undefined && response.farewell == "end") {

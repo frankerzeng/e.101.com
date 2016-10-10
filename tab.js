@@ -7,15 +7,15 @@ function sendMessage() {
 
 var btnClass1 = ".test-goon-btn";
 var btnClass2 = ".test-enter-btn";
-//var btnClass3 = ".ln-btn";
-var btnClass3 = ".ln-btn-1111";
+var btnClass3 = ".ln-btn";
+var url_xue = false;
 
 // 接收消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    // 填充html
-    if (request.type == 1) {
+    if (request.type == 1) { // 填充html
         sendResponse({farewell: "end"});
         htmlFill(request.data);
+        url_xue = request.url_xue;
     } else if (request.type == 2) {
         var btn_length = $(btnClass1).length || $(btnClass2).length || $(btnClass3).length;
         console.log('_---');
@@ -72,6 +72,77 @@ function beginExam() {
 }
 var flag_alert = true;
 function htmlFill(data) {
+    if (url_xue) {
+        console.log("-----------------------xue--");
+        console.log(data);
+
+        for (var j = 0; j < data.length; j++) {
+            var data_tmp = data[j];
+
+            var questionType = data_tmp.question_type;
+            var subItems = data_tmp.items;
+            var indexAnswer = 0;
+            // 单选题
+            if (questionType == 10) {
+                for (var i = 0; i < subItems.length; i++) {
+                    var answer = subItems[i].answer;
+                    if (answer == "B") {
+                        indexAnswer = 1;
+                    } else if (answer == "C") {
+                        indexAnswer = 2;
+                    } else if (answer == "D") {
+                        indexAnswer = 3;
+                    } else if (answer == "E") {
+                        indexAnswer = 4;
+                    } else if (answer == "F") {
+                        indexAnswer = 5;
+                    } else if (answer == "G") {
+                        indexAnswer = 6;
+                    } else if (answer == "H") {
+                        indexAnswer = 7;
+                    }
+                    $('#' + data_tmp.id).find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                }
+            } else if (questionType == 30) { // 判断题
+                for (var i = 0; i < subItems.length; i++) {
+                    var answer = subItems[i].answer;
+                    if (answer == "错") {
+                        indexAnswer = 1;
+                    }
+                    $('#' + data_tmp.id).find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                }
+            } else if (questionType == 15) { // 多选
+                for (var i = 0; i < subItems.length; i++) {
+                    var answer = subItems[i].answer;
+                    if (answer.indexOf("A") >= 0) {
+                        $('#' + data_tmp.id).find(".wt-item-option").children().eq(0).find("i").click();
+                    }
+                    if (answer.indexOf("B") >= 0) {
+                        $('#' + data_tmp.id).find(".wt-item-option").children().eq(1).find("i").click();
+                    }
+                    if (answer.indexOf("C") >= 0) {
+                        $('#' + data_tmp.id).find(".wt-item-option").children().eq(2).find("i").click();
+                    }
+                    if (answer.indexOf("D") >= 0) {
+                        $('#' + data_tmp.id).find(".wt-item-option").children().eq(3).find("i").click();
+                    }
+                    if (answer.indexOf("E") >= 0) {
+                        $('#' + data_tmp.id).find(".wt-item-option").children().eq(4).find("i").click();
+                    }
+                    if (answer.indexOf("F") >= 0) {
+                        $('#' + data_tmp.id).find(".wt-item-option").children().eq(5).find("i").click();
+                    }
+                }
+            } else if (questionType == 25) { // 主观题
+                if (flag_alert) {
+                    alert("考试包含主观题，请自行回答");
+                    flag_alert = false;
+                }
+            }
+        }
+        return;
+    }
+
     var index_0 = data.indexOf("(");
     data = data.slice(index_0 + 1, -1);
     data = JSON.parse(data);
