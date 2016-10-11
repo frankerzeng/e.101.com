@@ -8,15 +8,14 @@ function sendMessage() {
 var btnClass1 = ".test-goon-btn";
 var btnClass2 = ".test-enter-btn";
 var btnClass3 = ".ln-btn";
-var url_xue = false;
 
 // 接收消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type == 1) { // 填充html
         sendResponse({farewell: "end"});
-        htmlFill(request.data);
-        url_xue = request.url_xue;
+        htmlFill(request.data,request.url_xue);
     } else if (request.type == 2) {
+        console.log('_-dd--');
         var btn_length = $(btnClass1).length || $(btnClass2).length || $(btnClass3).length;
         console.log('_---');
         console.log(btn_length);
@@ -71,10 +70,14 @@ function beginExam() {
     }
 }
 var flag_alert = true;
-function htmlFill(data) {
+function htmlFill(data,url_xue) {
     if (url_xue) {
         console.log("-----------------------xue--");
         console.log(data);
+        data = eval(data);
+        console.log("-----------------------xuedd--");
+        console.log(data);
+
 
         for (var j = 0; j < data.length; j++) {
             var data_tmp = data[j];
