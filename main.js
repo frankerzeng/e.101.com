@@ -71,6 +71,7 @@ function _onBeforeSendHeaders() {
 // 发送消息
 function sendMessage(data, type) {
     chrome.tabs.query({active: true}, function (tab) {
+        console.log("_1");
         for (var i = 0; i < tab.length; i++) {
             if (isExamUrl(tab[i].url)) {
                 chrome.tabs.sendMessage(tab[i].id, {
