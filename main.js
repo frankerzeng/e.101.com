@@ -29,7 +29,12 @@ function _onCompleted() {
                     var index_start = url_real.indexOf('exams/');
                     var index_end = url_real.indexOf('analysis');
                     var replact_str = "exams/55ecf203-ade1-461f-b2ad-f6f2c2f450d8/sessions/ab02319d-3288-42c6-8641-9034a29220a2/";
-                    url_real = url_real.substring(0, index_start) + replact_str + url_real.substring(index_end);
+
+                    //var replact_str = "exams/55ecf203-ade1-461f-b2ad-f6f2c2f450d8/sessions/ab02319d-3288-42c6-8641-9034a29220a2/";
+                    //var replact_str = "exams/882d5b5c-0fa7-410b-9e05-a87e6d49ecb9/sessions/751fac0b-eef0-4eb0-9086-6366132bb882/";
+                    //exams/882d5b5c-0fa7-410b-9e05-a87e6d49ecb9/sessions/5dff18b0-9edc-4242-9fe0-d17f3dde7dfb
+
+                    //url_real = url_real.substring(0, index_start) + replact_str + url_real.substring(index_end);
 
                     console.log("===2");
                     console.log(url_real);
