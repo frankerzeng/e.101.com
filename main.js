@@ -1,5 +1,6 @@
 var urls_real = [];
 var url_xue = false;
+var parper_url = '';
 var init = function () {
     chrome.tabs.getSelected(function (w) {
         var addBtn = document.getElementById('addBtn');
@@ -21,7 +22,13 @@ var init = function () {
 function _onCompleted() {
     chrome.webRequest.onCompleted.addListener(
         function (details) {
+            if (parper_url != '') {
+                return;
+            }
             if (details.url.indexOf("xue.101.") > 1) {
+                console.log('===========================all listener');
+                console.log(details.url);
+
                 if (details.url.indexOf("/questions?qid") > 1) {
                     url_xue = true;
                     url_real = details.url.replace("/questions", "/analysis");
@@ -40,8 +47,20 @@ function _onCompleted() {
                     console.log(url_real);
 
                     urls_real.push(url_real);
+                } else if (details.url.indexOf("/papers?") > 1) { // http://xue.101.com/ndu/v1/exams/8aff9a26-a798-4a2e-b6ec-d99fb1f0c4d2/papers?_=1483531958207 返回考试ID
+                    console.log('=========================== papers');
+                    console.log(details.url);
+                    httpRequest(details.url, function (data) {
+                        console.log('-----> data');
+                        data = JSON.parse(data);
+                        data = 'http://xue.101.com/ndu/v1/papers/' + data[0]['id'];
+                        console.log(data);
+                        urls_real.push(data);
+                        parper_url = data;
+                    }, false);
                 }
             } else {
+                console.log(1111111);
                 if (details.url.indexOf("/baseinfo") > 1) {
                     url_real = details.url.replace("/baseinfo", "");
                     urls_real.push(url_real);
@@ -78,7 +97,10 @@ function sendMessage(data, type) {
     chrome.tabs.query({active: true}, function (tab) {
         console.log("_1");
         for (var i = 0; i < tab.length; i++) {
+            console.log(11);
             if (isExamUrl(tab[i].url)) {
+                console.log(1121);
+                console.log(tab[i].url);
                 chrome.tabs.sendMessage(tab[i].id, {
                     data: data,
                     type: type,
@@ -90,18 +112,25 @@ function sendMessage(data, type) {
                     } else if (type == 2 && response != undefined && response.farewell == "end") {
                         document.getElementById('titleId').innerHTML = "<h1>开始请求题目数据</h1>";
                         setTimeout(function () {
+                            if (parper_url != '') {
+                                console.log('================???');
+                                console.log(parper_url);
+                                setTimeout(function () {
+                                    httpRequest(parper_url, htmlFill, false)
+                                }, 1000);
+                                url_xue = 1;
+                                return;
+                            }
                             console.log("urls_real======array");
                             console.log(urls_real);
                             for (var i = 0; i < urls_real.length; i++) {
                                 (function (i) {
                                     setTimeout(function () {
-                                        httpRequest(urls_real[i], htmlFill)
+                                        httpRequest(urls_real[i], htmlFill, true)
                                     }, 1000);
                                 })(i);
                             }
                         }, 2000);
-                        // 提交考试
-                        //sendMessage("", 3);
                     } else if (type == 3 && response != undefined && response.farewell == "end") {
                         document.getElementById('titleId').innerHTML = "<h1>已提交</h1>";
                     }
@@ -122,11 +151,11 @@ function isExamUrl(url) {
     return patt.test(url);
 }
 
-function httpRequest(url, callback) {
+function httpRequest(url, callback, asy) {
     console.log("url======array");
     console.log(url);
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+    xhr.open("GET", url, asy);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             callback(xhr.responseText);
@@ -135,6 +164,8 @@ function httpRequest(url, callback) {
     xhr.send();
 }
 function htmlFill(data) {
+    console.log('--------->>>>>');
+    console.log(data);
     sendMessage(data, 1);
 }
 
