@@ -108,7 +108,7 @@ function htmlFill(data, url_xue) {
                     }
                     var body = subItems[i].body;
                     body = body.substring(3, body.length - 4);
-                    var div_tit = $("p:contains(" + body + ")").parent().parent().parent().parent().parent().parent().css('color','#ff0');
+                    var div_tit = $("p:contains(" + body + ")").parent().parent().parent().parent().parent().parent();
 
                     div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                 }
@@ -120,7 +120,7 @@ function htmlFill(data, url_xue) {
                     }
                     var body = subItems[i].body;
                     body = body.substring(3, body.length - 4);
-                    var div_tit = $("p:contains(" + body + ")").parent().parent().parent().parent().parent().parent().css('color','#ff0');
+                    var div_tit = $("p:contains(" + body + ")").parent().parent().parent().parent().parent().parent();
 
                     div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                 }
@@ -130,7 +130,7 @@ function htmlFill(data, url_xue) {
 
                     var body = subItems[i].body;
                     body = body.substring(3, body.length - 4);
-                    var div_tit = $("p:contains(" + body + ")").parent().parent().parent().parent().parent().parent().css('color','#ff0');
+                    var div_tit = $("p:contains(" + body + ")").parent().parent().parent().parent().parent().parent();
 
                     if (answer.indexOf("A") >= 0) {
                         div_tit.find(".wt-item-option").children().eq(0).find("i").click();
