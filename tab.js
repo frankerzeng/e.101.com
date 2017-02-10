@@ -122,21 +122,24 @@ function htmlFill(data, url_xue) {
                         }
                     }
 
-                    var p_tag = $("p:contains(" + body + ")");
 
                     var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
 
-                    var title = p_tag.parent().children().eq(0).text();
-                    var question = p_tag.parent().children().eq(1).text();
-                    console.log('11');
-                    console.log(title);
-                    console.log(question);
-                    console.log(body_remove_tag);
-                    console.log(title + question == body_remove_tag);
-                    console.log('--');
-                    if (title + question == body_remove_tag) {
-                        var div_tit = p_tag.parent().parent().parent().parent().parent().parent();
-                        div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                    var p_tag = $("p:contains(" + body + ")");
+
+                    for (var k = 0; k < p_tag.length; k++) {
+                        var title = p_tag[k].parent().children().eq(0).text();
+                        var question = p_tag[k].parent().children().eq(1).text();
+                        console.log('------');
+                        console.log(title);
+                        console.log(question);
+                        console.log(body_remove_tag);
+                        console.log(title + question == body_remove_tag);
+                        console.log('------');
+                        if (title + question == body_remove_tag) {
+                            var div_tit = p_tag[k].parent().parent().parent().parent().parent().parent();
+                            div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                        }
                     }
                 }
             } else if (questionType == 30) { // 判断题
@@ -161,22 +164,25 @@ function htmlFill(data, url_xue) {
                         }
                     }
 
-                    var p_tag = $("p:contains(" + body + ")");
-
                     var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
 
-                    var title = p_tag.parent().children().eq(0).text();
-                    var question = p_tag.parent().children().eq(1).text();
-                    console.log('11');
-                    console.log(title);
-                    console.log(question);
-                    console.log(body_remove_tag);
-                    console.log(title + question == body_remove_tag);
-                    console.log('--');
-                    if (title + question == body_remove_tag) {
-                        var div_tit = p_tag.parent().parent().parent().parent().parent().parent();
-                        div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                    var p_tag = $("p:contains(" + body + ")");
+
+                    for (var k = 0; k < p_tag.length; k++) {
+                        var title = p_tag[k].parent().children().eq(0).text();
+                        var question = p_tag[k].parent().children().eq(1).text();
+                        console.log('------');
+                        console.log(title);
+                        console.log(question);
+                        console.log(body_remove_tag);
+                        console.log(title + question == body_remove_tag);
+                        console.log('------');
+                        if (title + question == body_remove_tag) {
+                            var div_tit = p_tag[k].parent().parent().parent().parent().parent().parent();
+                            div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                        }
                     }
+
                 }
             } else if (questionType == 15) { // 多选
                 for (var i = 0; i < subItems.length; i++) {
@@ -198,22 +204,26 @@ function htmlFill(data, url_xue) {
                         }
                     }
 
-                    var p_tag = $("p:contains(" + body + ")");
-
                     var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
 
-                    var title = p_tag.parent().children().eq(0).text();
-                    var question = p_tag.parent().children().eq(1).text();
-                    console.log('11');
-                    console.log(title);
-                    console.log(question);
-                    console.log(body_remove_tag);
-                    console.log(title + question == body_remove_tag);
-                    console.log('--');
-                    if (title + question != body_remove_tag) {
-                        continue;
+                    var p_tag = $("p:contains(" + body + ")");
+                    for (var k = 0; k < p_tag.length; k++) {
+                        var title = p_tag[k].parent().children().eq(0).text();
+                        var question = p_tag[k].parent().children().eq(1).text();
+                        console.log('-----');
+                        console.log(title);
+                        console.log(question);
+                        console.log(body_remove_tag);
+                        console.log(title + question == body_remove_tag);
+                        console.log('-----');
+                        if (title + question != body_remove_tag) {
+                            continue;
+                        } else {
+                            var div_tit = p_tag[k].parent().parent().parent().parent().parent().parent();
+                            break;
+                        }
                     }
-                    var div_tit = p_tag.parent().parent().parent().parent().parent().parent();
+
 
                     if (answer.indexOf("A") >= 0) {
                         div_tit.find(".wt-item-option").children().eq(0).find("i").click();
