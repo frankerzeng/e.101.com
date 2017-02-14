@@ -128,8 +128,9 @@ function htmlFill(data, url_xue) {
                     var p_tag = $("p:contains(" + body + ")");
 
                     for (var k = 0; k < p_tag.length; k++) {
-                        var title = p_tag[k].parent().children().eq(0).text();
-                        var question = p_tag[k].parent().children().eq(1).text();
+                        console.log(p_tag[k]);
+                        var title = p_tag.eq(k).parent().children().eq(0).text();
+                        var question = p_tag.eq(k).parent().children().eq(1).text();
                         console.log('------');
                         console.log(title);
                         console.log(question);
@@ -137,7 +138,7 @@ function htmlFill(data, url_xue) {
                         console.log(title + question == body_remove_tag);
                         console.log('------');
                         if (title + question == body_remove_tag) {
-                            var div_tit = p_tag[k].parent().parent().parent().parent().parent().parent();
+                            var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
                             div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                         }
                     }
@@ -169,8 +170,8 @@ function htmlFill(data, url_xue) {
                     var p_tag = $("p:contains(" + body + ")");
 
                     for (var k = 0; k < p_tag.length; k++) {
-                        var title = p_tag[k].parent().children().eq(0).text();
-                        var question = p_tag[k].parent().children().eq(1).text();
+                        var title = p_tag.eq(k).parent().children().eq(0).text();
+                        var question = p_tag.eq(k).parent().children().eq(1).text();
                         console.log('------');
                         console.log(title);
                         console.log(question);
@@ -178,7 +179,7 @@ function htmlFill(data, url_xue) {
                         console.log(title + question == body_remove_tag);
                         console.log('------');
                         if (title + question == body_remove_tag) {
-                            var div_tit = p_tag[k].parent().parent().parent().parent().parent().parent();
+                            var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
                             div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                         }
                     }
@@ -208,40 +209,35 @@ function htmlFill(data, url_xue) {
 
                     var p_tag = $("p:contains(" + body + ")");
                     for (var k = 0; k < p_tag.length; k++) {
-                        var title = p_tag[k].parent().children().eq(0).text();
-                        var question = p_tag[k].parent().children().eq(1).text();
+                        var title = p_tag.eq(k).parent().children().eq(0).text();
+                        var question = p_tag.eq(k).parent().children().eq(1).text();
                         console.log('-----');
                         console.log(title);
                         console.log(question);
                         console.log(body_remove_tag);
                         console.log(title + question == body_remove_tag);
                         console.log('-----');
-                        if (title + question != body_remove_tag) {
-                            continue;
-                        } else {
-                            var div_tit = p_tag[k].parent().parent().parent().parent().parent().parent();
-                            break;
+                        if (title + question == body_remove_tag) {
+                            var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
+                            if (answer.indexOf("A") >= 0) {
+                                div_tit.find(".wt-item-option").children().eq(0).find("i").click();
+                            }
+                            if (answer.indexOf("B") >= 0) {
+                                div_tit.find(".wt-item-option").children().eq(1).find("i").click();
+                            }
+                            if (answer.indexOf("C") >= 0) {
+                                div_tit.find(".wt-item-option").children().eq(2).find("i").click();
+                            }
+                            if (answer.indexOf("D") >= 0) {
+                                div_tit.find(".wt-item-option").children().eq(3).find("i").click();
+                            }
+                            if (answer.indexOf("E") >= 0) {
+                                div_tit.find(".wt-item-option").children().eq(4).find("i").click();
+                            }
+                            if (answer.indexOf("F") >= 0) {
+                                div_tit.find(".wt-item-option").children().eq(5).find("i").click();
+                            }
                         }
-                    }
-
-
-                    if (answer.indexOf("A") >= 0) {
-                        div_tit.find(".wt-item-option").children().eq(0).find("i").click();
-                    }
-                    if (answer.indexOf("B") >= 0) {
-                        div_tit.find(".wt-item-option").children().eq(1).find("i").click();
-                    }
-                    if (answer.indexOf("C") >= 0) {
-                        div_tit.find(".wt-item-option").children().eq(2).find("i").click();
-                    }
-                    if (answer.indexOf("D") >= 0) {
-                        div_tit.find(".wt-item-option").children().eq(3).find("i").click();
-                    }
-                    if (answer.indexOf("E") >= 0) {
-                        div_tit.find(".wt-item-option").children().eq(4).find("i").click();
-                    }
-                    if (answer.indexOf("F") >= 0) {
-                        div_tit.find(".wt-item-option").children().eq(5).find("i").click();
                     }
                 }
             } else if (questionType == 25) { // 主观题
