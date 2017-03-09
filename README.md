@@ -2,7 +2,7 @@
 
 在 开始考试或者重新考试页面
 
-![image](https://github.com/frankerzeng/e.101.com/begin.png)
+![image](https://github.com/frankerzeng/e.101.com/blob/master/begin.png)
 
 点击插件中的开始考试按钮，等待答案填充完毕即可交卷。
 
