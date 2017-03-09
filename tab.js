@@ -57,7 +57,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function beginExam() {
-
     var btn1 = $(btnClass1);
     var btn2 = $(btnClass2);
     var btn3 = $(btnClass3);
@@ -79,7 +78,6 @@ function htmlFill(data, url_xue) {
         console.log("-----------------------xuedd--");
         console.log(data);
         data = data.parts[0].questions;
-
 
         for (var j = 0; j < data.length; j++) {
             var data_tmp = data[j];
@@ -122,22 +120,16 @@ function htmlFill(data, url_xue) {
                         }
                     }
 
-
                     var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
 
                     var p_tag = $("p:contains(" + body + ")");
 
                     for (var k = 0; k < p_tag.length; k++) {
-                        console.log(p_tag[k]);
-                        var title = p_tag.eq(k).parent().children().eq(0).text();
-                        var question = p_tag.eq(k).parent().children().eq(1).text();
-                        console.log('------');
-                        console.log(title);
-                        console.log(question);
-                        console.log(body_remove_tag);
-                        console.log(title + question == body_remove_tag);
-                        console.log('------');
-                        if (title + question == body_remove_tag) {
+                        var title_question = '';
+                        for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
+                            title_question += p_tag.eq(k).parent().children().eq(kk).text()
+                        }
+                        if (title_question == body_remove_tag) {
                             var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
                             div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                         }
@@ -164,26 +156,20 @@ function htmlFill(data, url_xue) {
                             body = body.substring(inde + 1);
                         }
                     }
-
                     var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
 
                     var p_tag = $("p:contains(" + body + ")");
 
                     for (var k = 0; k < p_tag.length; k++) {
-                        var title = p_tag.eq(k).parent().children().eq(0).text();
-                        var question = p_tag.eq(k).parent().children().eq(1).text();
-                        console.log('------');
-                        console.log(title);
-                        console.log(question);
-                        console.log(body_remove_tag);
-                        console.log(title + question == body_remove_tag);
-                        console.log('------');
-                        if (title + question == body_remove_tag) {
+                        var title_question = '';
+                        for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
+                            title_question += p_tag.eq(k).parent().children().eq(kk).text()
+                        }
+                        if (title_question == body_remove_tag) {
                             var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
                             div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                         }
                     }
-
                 }
             } else if (questionType == 15) { // 多选
                 for (var i = 0; i < subItems.length; i++) {
@@ -209,15 +195,11 @@ function htmlFill(data, url_xue) {
 
                     var p_tag = $("p:contains(" + body + ")");
                     for (var k = 0; k < p_tag.length; k++) {
-                        var title = p_tag.eq(k).parent().children().eq(0).text();
-                        var question = p_tag.eq(k).parent().children().eq(1).text();
-                        console.log('-----');
-                        console.log(title);
-                        console.log(question);
-                        console.log(body_remove_tag);
-                        console.log(title + question == body_remove_tag);
-                        console.log('-----');
-                        if (title + question == body_remove_tag) {
+                        var title_question = '';
+                        for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
+                            title_question += p_tag.eq(k).parent().children().eq(kk).text()
+                        }
+                        if (title_question == body_remove_tag) {
                             var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
                             if (answer.indexOf("A") >= 0) {
                                 div_tit.find(".wt-item-option").children().eq(0).find("i").click();
