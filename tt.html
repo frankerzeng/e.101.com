@@ -1,0 +1,36 @@
+/**
+* Created by Administrator on 2016/10/10.
+*/
+<script type="text/javascript">
+
+    url_real = "http://xue.101.com/ndu/v1/m/exams/d/sessions/s/analysis?qid=3756a44f-a644-44f7-8903-d79e0cf031c1_0&_=1476066669344";
+    var index_start = url_real.indexOf('exams/');
+    var index_end = url_real.indexOf('analysis');
+    var replact_str = "exams/55ecf203-ade1-461f-b2ad-f6f2c2f450d8/sessions/ab02319d-3288-42c6-8641-9034a29220a2/";
+    console.log(index_start);
+    console.log(index_end);
+    console.log(url_real.substring(0, index_start) + replact_str + url_real.substring(index_end));
+
+    var data = '[{"id":"0c555af3-ad97-4c08-85e6-a9d76248d7e8","version":0,"subjective":false,"complex_body":"","complex_explanation":"","question_type":10,"question_answer_status":null,"total_score":40.0,"user_score":null,"cost_seconds":null,"marking_remark":null,"marking_user_id":null,"user_answer":null,"items":[{"body":"<p>在提交出差住宿费用报销时，以下哪种情况是不允许报销的？</p>","explanation":"<p>出差期间投宿亲友家，公司将按照住宿标准给予50%的住宿补贴(该补贴在报销单走完流程后,合并到当月工资发放,个税由员工承担)；住宿费超支自付。</p>","question_type":10,"answer":"B","user_answer":null,"options":["<p>同性双人同行出差，两人一间，住宿费按高职级员工对应的标准报销，不得重复计算</p>","<p>出差期间投宿异地亲友家中，但根据出差住宿费用标准提供发票报销</p>","<p>出差人数为1人，根据出差住宿费用标准报销单间标准房住宿费用</p>"],"score":40.0,"user_score":null,"question_answer_status":null,"body_attachments":[],"explanation_attachments":[],"answer_attachments":[]}],"body_attachments":[],"explanation_attachments":[]}]';
+    data = '[{"id":"620e14ff-1ea9-4497-8bbb-a893e0a069c8","version":0,"subjective":false,"complex_body":"","complex_explanation":"","question_type":30,"question_answer_status":null,"total_score":30.0,"user_score":null,"cost_seconds":null,"marking_remark":null,"marking_user_id":null,"user_answer":null,"items":[{"body":"<p>程序员小白今天加班，加班期间的工作日志只需在《加班单》上填写，《加班单》审批通过后相关内容会直接导入日志系统，就不必再在日志系统中填写咯！</p>","explanation":"","question_type":30,"answer":"对","user_answer":null,"options":[],"score":30.0,"user_score":null,"question_answer_status":null,"body_attachments":[],"explanation_attachments":[],"answer_attachments":[]}],"body_attachments":[],"explanation_attachments":[]},{"id":"c214c71f-fa48-440a-a683-5f76f8b429fe","version":0,"subjective":false,"complex_body":"","complex_explanation":"","question_type":30,"question_answer_status":null,"total_score":30.0,"user_score":null,"cost_seconds":null,"marking_remark":null,"marking_user_id":null,"user_answer":null,"items":[{"body":"<p>小白同学今天收到薪资，发现有疑问，他可以向部门HRBP咨询，无法解决的再由HRBP反馈至薪酬福利处</p>","explanation":"","question_type":30,"answer":"对","user_answer":null,"options":[],"score":30.0,"user_score":null,"question_answer_status":null,"body_attachments":[],"explanation_attachments":[],"answer_attachments":[]}],"body_attachments":[],"explanation_attachments":[]}]';
+    console.log(data);
+
+//    var index_0 = data.indexOf("[");
+//    data = data.slice(index_0 + 1, -1);
+    data = eval(data);
+    console.log(data);
+
+    for (var j = 0; j < data.length; j++) {
+        var data_tmp = data[j];
+
+        var questionType = data_tmp.question_type;
+        var subItems = data_tmp.items;
+        var indexAnswer = 0;
+
+        console.log(questionType);
+        console.log(subItems);
+        console.log(indexAnswer);
+    }
+
+
+</script>
