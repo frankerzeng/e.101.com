@@ -77,10 +77,11 @@ function htmlFill(data, url_xue) {
         data = JSON.parse(data);
         console.log("-----------------------xuedd--");
         console.log(data);
-        data_bg = data;
+        var data_bg = data;
+        var data_bg_1 = data;
 
-        for(var jk=0;jk<data_bg.part_count;jk++){
-            data = data.parts[jk].questions;
+        for (var jk = 0; jk < data_bg.part_count; jk++) {
+            data = data_bg_1.parts[jk].questions;
             console.log('[[[[[[[[[[[[[[[[[');
             console.log(data);
             for (var j = 0; j < data.length; j++) {
@@ -167,18 +168,11 @@ function htmlFill(data, url_xue) {
 
                         var p_tag = $("p:contains(" + body + ")");
 
-                        console.log('--------------------');
-                        console.log(body_remove_tag);
-                        console.log('--------------------');
-
-                        console.log(p_tag);
                         for (var k = 0; k < p_tag.length; k++) {
                             var title_question = '';
                             for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
                                 title_question += p_tag.eq(k).parent().children().eq(kk).text()
                             }
-                            console.log(title_question);
-
                             if (title_question == body_remove_tag) {
                                 var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
                                 div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
