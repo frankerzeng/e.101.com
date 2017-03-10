@@ -77,155 +77,170 @@ function htmlFill(data, url_xue) {
         data = JSON.parse(data);
         console.log("-----------------------xuedd--");
         console.log(data);
-        data = data.parts[0].questions;
+        data_bg = data;
 
-        for (var j = 0; j < data.length; j++) {
-            var data_tmp = data[j];
+        for(var jk=0;jk<data_bg.part_count;jk++){
+            data = data.parts[jk].questions;
+            console.log('[[[[[[[[[[[[[[[[[');
+            console.log(data);
+            for (var j = 0; j < data.length; j++) {
+                var data_tmp = data[j];
 
-            var questionType = data_tmp.question_type;
-            var subItems = data_tmp.items;
-            var indexAnswer = 0;
-            // 单选题
-            if (questionType == 10) {
-                for (var i = 0; i < subItems.length; i++) {
-                    var answer = subItems[i].answer;
-                    if (answer == "B") {
-                        indexAnswer = 1;
-                    } else if (answer == "C") {
-                        indexAnswer = 2;
-                    } else if (answer == "D") {
-                        indexAnswer = 3;
-                    } else if (answer == "E") {
-                        indexAnswer = 4;
-                    } else if (answer == "F") {
-                        indexAnswer = 5;
-                    } else if (answer == "G") {
-                        indexAnswer = 6;
-                    } else if (answer == "H") {
-                        indexAnswer = 7;
-                    }
-                    var body = subItems[i].body;
+                var questionType = data_tmp.question_type;
+                var subItems = data_tmp.items;
+                var indexAnswer = 0;
+                // 单选题
+                console.log('=================');
+                console.log(questionType);
 
-                    var body_init = body;
-
-                    body = body.substring(0, body.indexOf('</'));
-                    var flag = true;
-                    var inde = '';
-                    while (flag) {
-                        inde = body.indexOf('>');
-                        if (inde == -1) {
-                            flag = false;
-                        } else {
-                            body = body.substring(inde + 1);
+                if (questionType == 10) {
+                    for (var i = 0; i < subItems.length; i++) {
+                        var answer = subItems[i].answer;
+                        if (answer == "B") {
+                            indexAnswer = 1;
+                        } else if (answer == "C") {
+                            indexAnswer = 2;
+                        } else if (answer == "D") {
+                            indexAnswer = 3;
+                        } else if (answer == "E") {
+                            indexAnswer = 4;
+                        } else if (answer == "F") {
+                            indexAnswer = 5;
+                        } else if (answer == "G") {
+                            indexAnswer = 6;
+                        } else if (answer == "H") {
+                            indexAnswer = 7;
                         }
-                    }
+                        var body = subItems[i].body;
 
-                    var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
+                        var body_init = body;
 
-                    var p_tag = $("p:contains(" + body + ")");
-
-                    for (var k = 0; k < p_tag.length; k++) {
-                        var title_question = '';
-                        for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
-                            title_question += p_tag.eq(k).parent().children().eq(kk).text()
-                        }
-                        if (title_question == body_remove_tag) {
-                            var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
-                            div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
-                        }
-                    }
-                }
-            } else if (questionType == 30) { // 判断题
-                for (var i = 0; i < subItems.length; i++) {
-                    var answer = subItems[i].answer;
-                    if (answer == "错") {
-                        indexAnswer = 1;
-                    }
-                    var body = subItems[i].body;
-
-                    var body_init = body;
-
-                    body = body.substring(0, body.indexOf('</'));
-                    var flag = true;
-                    var inde = '';
-                    while (flag) {
-                        inde = body.indexOf('>');
-                        if (inde == -1) {
-                            flag = false;
-                        } else {
-                            body = body.substring(inde + 1);
-                        }
-                    }
-                    var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
-
-                    var p_tag = $("p:contains(" + body + ")");
-
-                    for (var k = 0; k < p_tag.length; k++) {
-                        var title_question = '';
-                        for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
-                            title_question += p_tag.eq(k).parent().children().eq(kk).text()
-                        }
-                        if (title_question == body_remove_tag) {
-                            var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
-                            div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
-                        }
-                    }
-                }
-            } else if (questionType == 15) { // 多选
-                for (var i = 0; i < subItems.length; i++) {
-                    var answer = subItems[i].answer;
-
-                    var body = subItems[i].body;
-
-                    var body_init = body;
-
-                    body = body.substring(0, body.indexOf('</'));
-                    var flag = true;
-                    var inde = '';
-                    while (flag) {
-                        inde = body.indexOf('>');
-                        if (inde == -1) {
-                            flag = false;
-                        } else {
-                            body = body.substring(inde + 1);
-                        }
-                    }
-
-                    var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
-
-                    var p_tag = $("p:contains(" + body + ")");
-                    for (var k = 0; k < p_tag.length; k++) {
-                        var title_question = '';
-                        for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
-                            title_question += p_tag.eq(k).parent().children().eq(kk).text()
-                        }
-                        if (title_question == body_remove_tag) {
-                            var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
-                            if (answer.indexOf("A") >= 0) {
-                                div_tit.find(".wt-item-option").children().eq(0).find("i").click();
+                        body = body.substring(0, body.indexOf('</'));
+                        var flag = true;
+                        var inde = '';
+                        while (flag) {
+                            inde = body.indexOf('>');
+                            if (inde == -1) {
+                                flag = false;
+                            } else {
+                                body = body.substring(inde + 1);
                             }
-                            if (answer.indexOf("B") >= 0) {
-                                div_tit.find(".wt-item-option").children().eq(1).find("i").click();
+                        }
+
+                        var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
+
+                        var p_tag = $("p:contains(" + body + ")");
+
+                        for (var k = 0; k < p_tag.length; k++) {
+                            var title_question = '';
+                            for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
+                                title_question += p_tag.eq(k).parent().children().eq(kk).text()
                             }
-                            if (answer.indexOf("C") >= 0) {
-                                div_tit.find(".wt-item-option").children().eq(2).find("i").click();
-                            }
-                            if (answer.indexOf("D") >= 0) {
-                                div_tit.find(".wt-item-option").children().eq(3).find("i").click();
-                            }
-                            if (answer.indexOf("E") >= 0) {
-                                div_tit.find(".wt-item-option").children().eq(4).find("i").click();
-                            }
-                            if (answer.indexOf("F") >= 0) {
-                                div_tit.find(".wt-item-option").children().eq(5).find("i").click();
+                            if (title_question == body_remove_tag) {
+                                var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
+                                div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
                             }
                         }
                     }
-                }
-            } else if (questionType == 25) { // 主观题
-                if (flag_alert) {
-                    alert("考试包含主观题，请自行回答");
-                    flag_alert = false;
+                } else if (questionType == 30) { // 判断题
+                    for (var i = 0; i < subItems.length; i++) {
+                        var answer = subItems[i].answer;
+                        if (answer == "错") {
+                            indexAnswer = 1;
+                        }
+                        var body = subItems[i].body;
+
+                        var body_init = body;
+
+                        body = body.substring(0, body.indexOf('</'));
+                        var flag = true;
+                        var inde = '';
+                        while (flag) {
+                            inde = body.indexOf('>');
+                            if (inde == -1) {
+                                flag = false;
+                            } else {
+                                body = body.substring(inde + 1);
+                            }
+                        }
+                        var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
+
+                        var p_tag = $("p:contains(" + body + ")");
+
+                        console.log('--------------------');
+                        console.log(body_remove_tag);
+                        console.log('--------------------');
+
+                        console.log(p_tag);
+                        for (var k = 0; k < p_tag.length; k++) {
+                            var title_question = '';
+                            for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
+                                title_question += p_tag.eq(k).parent().children().eq(kk).text()
+                            }
+                            console.log(title_question);
+
+                            if (title_question == body_remove_tag) {
+                                var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
+                                div_tit.find(".wt-item-option").children().eq(indexAnswer).find("i").click();
+                            }
+                        }
+                    }
+                } else if (questionType == 15) { // 多选
+                    for (var i = 0; i < subItems.length; i++) {
+                        var answer = subItems[i].answer;
+
+                        var body = subItems[i].body;
+
+                        var body_init = body;
+
+                        body = body.substring(0, body.indexOf('</'));
+                        var flag = true;
+                        var inde = '';
+                        while (flag) {
+                            inde = body.indexOf('>');
+                            if (inde == -1) {
+                                flag = false;
+                            } else {
+                                body = body.substring(inde + 1);
+                            }
+                        }
+
+                        var body_remove_tag = body_init.replace(/<[^>]+>/g, "");
+
+                        var p_tag = $("p:contains(" + body + ")");
+                        for (var k = 0; k < p_tag.length; k++) {
+                            var title_question = '';
+                            for (var kk = 0; kk < p_tag.eq(k).parent().children().length; kk++) {
+                                title_question += p_tag.eq(k).parent().children().eq(kk).text()
+                            }
+                            if (title_question == body_remove_tag) {
+                                var div_tit = p_tag.eq(k).parent().parent().parent().parent().parent().parent();
+                                if (answer.indexOf("A") >= 0) {
+                                    div_tit.find(".wt-item-option").children().eq(0).find("i").click();
+                                }
+                                if (answer.indexOf("B") >= 0) {
+                                    div_tit.find(".wt-item-option").children().eq(1).find("i").click();
+                                }
+                                if (answer.indexOf("C") >= 0) {
+                                    div_tit.find(".wt-item-option").children().eq(2).find("i").click();
+                                }
+                                if (answer.indexOf("D") >= 0) {
+                                    div_tit.find(".wt-item-option").children().eq(3).find("i").click();
+                                }
+                                if (answer.indexOf("E") >= 0) {
+                                    div_tit.find(".wt-item-option").children().eq(4).find("i").click();
+                                }
+                                if (answer.indexOf("F") >= 0) {
+                                    div_tit.find(".wt-item-option").children().eq(5).find("i").click();
+                                }
+                            }
+                        }
+                    }
+                } else if (questionType == 25) { // 主观题
+                    if (flag_alert) {
+                        alert("考试包含主观题，请自行回答");
+                        flag_alert = false;
+                    }
                 }
             }
         }
